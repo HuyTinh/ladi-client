@@ -1,2 +1,1 @@
-# landi-cdn
 # ladi-server
