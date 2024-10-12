@@ -68,7 +68,8 @@ initBottomLinks();
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+import { getDatabase, ref, child, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -84,11 +85,42 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getDatabase();
 
-function render(elementClass, contents) {
-    document.getElementsByClassName(`${elementClass}`)[0].outerHTML = contents
+// Render element
+
+function Render(elementClass, contents) {
+    var element = document.getElementsByClassName(`${elementClass}`)[0]
+
+    element.outerHTML = contents
+}
+
+// HTTP Method
+
+function PostData() {
+    set(ref(db, "products/" + self.crypto.randomUUID()), {
+        name: "GTX 3060 Ti",
+        price: 150000,
+    }).then(() => {
+        alert("Data added successfully")
+    })
+}
+
+function GetAllData(path) {
+    const dbRef = ref(db);
+
+    return get(child(dbRef, path + "/",)).then((snapshot) => {
+        if (snapshot.exists()) {
+            let response = snapshot.val()
+            return Object.keys(response).map((val) => {
+                return {
+                    ...response[val],
+                    id: val
+                }
+            })
+        }
+    })
 }
 
 
-export { render }
+export { Render, PostData, GetAllData }

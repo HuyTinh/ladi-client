@@ -10,17 +10,51 @@
 </head>
 
 <body>
-    <div class="btn">c</div>
+    <div class="btn"></div>
     <!-- v-scope value can be omitted -->
-
-    <script type="module">
-        import { render } from "./js/ladi-server@0.0.2.js"
-
-        document.addEventListener("DOMContentLoaded", () => {
-            render("btn", "<button>a</button>")
-        });
-    </script>
     <script type="module" src="./js/ladi-server@0.0.2.js"></script>
+    <script type="module">
+        import { Render, PostData, GetAllData } from "./js/ladi-server@0.0.2.js"
+
+        Render("btn",
+            `<div class="d-flex">
+                ${[...await GetAllData("products")].map((val, index) =>
+                `<div class="card mx-2" style="width: 18rem;"  data-bs-toggle="modal" data-bs-target="#exampleModal_${val.id}">
+                    <img src=${val.thumbnail} class="card-img-top object-fit-cover" style="height: 18rem" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${val.name}</h5>
+                        <p class="card-text">Price: ${val.price.toLocaleString()} VND</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal_${val.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src=${val.thumbnail} class="card-img-top object-fit-cover" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">${val.name}</h5>
+                        <p class="card-text">Price: ${val.price.toLocaleString()} VND</p>
+                        <p class="card-text">${val.note}</p>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                `).join("\n")}
+            </div>
+        `)
+
+    </script>
 </body>
 
 </html>
