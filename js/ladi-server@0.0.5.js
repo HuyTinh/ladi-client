@@ -58,6 +58,8 @@ function initTags(arrTag, domElement) {
 
 const initHeadLinks = () => {
 
+    document.documentElement.setAttribute("data-theme", "cupcake");
+
     var head = document.querySelector('head');
 
     initTags(headTags, head)
