@@ -9,6 +9,16 @@ const headTags = [
             crossOrigin: "anonymous"
         }
 
+    },
+    {
+        tagName: "script",
+        attributes:
+        {
+            src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+            integrity: "sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==",
+            crossOrigin: "anonymous",
+            referrerpolicy: "no-referrer"
+        }
     }
 ]
 
@@ -56,9 +66,6 @@ initHeadLinks();
 initBottomLinks();
 
 
-// Source Code
-import { createApp } from 'https://unpkg.com/petite-vue?module'
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
@@ -79,15 +86,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-createApp({
-    // exposed to all expressions
-    count: 0,
-    // getters
-    get plusOne() {
-        return this.count + 1
-    },
-    // methods
-    increment() {
-        this.count++
-    }
-}).mount()
+function render(elementClass, contents) {
+    document.getElementsByClassName(`${elementClass}`)[0].outerHTML = contents
+}
+
+
+export { render }

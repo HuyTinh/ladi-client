@@ -6,15 +6,20 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
 </head>
 
 <body>
+    <div class="btn">c</div>
     <!-- v-scope value can be omitted -->
-    <div v-scope>
-        <p>{{ count }}</p>
-        <p>{{ plusOne }}</p>
-        <button @click="increment">increment</button>
-    </div>
+
+    <script type="module">
+        import { render } from "./js/ladi-server@0.0.2.js"
+
+        document.addEventListener("DOMContentLoaded", () => {
+            render("btn", "<button>a</button>")
+        });
+    </script>
     <script type="module" src="./js/ladi-server@0.0.2.js"></script>
 </body>
 
