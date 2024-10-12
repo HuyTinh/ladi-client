@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="cupcake">
 
 <head>
     <title></title>
@@ -12,44 +12,43 @@
 <body>
     <div class="btn"></div>
     <!-- v-scope value can be omitted -->
-    <script type="module" src="./js/ladi-server@0.0.2.js"></script>
+    <script type="module" src="./js/ladi-server@0.0.3.js"></script>
     <script type="module">
-        import { Render, PostData, GetAllData } from "./js/ladi-server@0.0.2.js"
+        import { Render, PostData, GetAllData } from "./js/ladi-server@0.0.3.js"
 
         Render("btn",
-            `<div class="d-flex">
+            `<div class="flex gap-x-2">
                 ${[...await GetAllData("products")].map((val, index) =>
-                `<div class="card mx-2" style="width: 18rem;"  data-bs-toggle="modal" data-bs-target="#exampleModal_${val.id}">
-                    <img src=${val.thumbnail} class="card-img-top object-fit-cover" style="height: 18rem" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${val.name}</h5>
-                        <p class="card-text">Price: ${val.price.toLocaleString()} VND</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                `<div class="card bg-base-100 w-96 shadow-xl" onclick="document.getElementById('product_modal_${val.id}').showModal()">
+                    <figure class="px-10 pt-10 h-96">
+                        <img
+                        src=${val.thumbnail}
+                        class="rounded-xl object-cover h-full" />
+                    </figure>
+                    <div class="card-body items-center text-center">
+                        <h2 class="card-title">${val.name}</h2>
                     </div>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal_${val.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+                <dialog id="product_modal_${val.id}" class="modal">
+                    <div class="modal-box">
+                        <figure class="px-10 pt-10">
+                        <img
+                            src=${val.thumbnail}
+                            class="rounded-xl object-cover h-full" />
+                        </figure>
+                        <div class="card-body items-center text-center">
+                            <h2 class="card-title">${val.name}</h2>
+                            <p>${val.note}</p>
+                        </div>
+                        <div class="modal-action">
+                        <form method="dialog">
+                            <!-- if there is a button in form, it will close the modal -->
+                            <button class="btn">Close</button>
+                        </form>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <img src=${val.thumbnail} class="card-img-top object-fit-cover" alt="...">
-                        <div class="card-body">
-                        <h5 class="card-title">${val.name}</h5>
-                        <p class="card-text">Price: ${val.price.toLocaleString()} VND</p>
-                        <p class="card-text">${val.note}</p>
-                    </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                    </div>
-                </div>
-                </div>
+                </dialog>
                 `).join("\n")}
             </div>
         `)
