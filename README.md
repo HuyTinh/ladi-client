@@ -1,7 +1,7 @@
 <p align="center">
     <img src="https://cdn-icons-png.flaticon.com/512/1499/1499993.png" align="center" width="30%">
 </p>
-<p align="center"><h1 align="center">LADI-SERVER</h1></p>
+<p align="center"><h1 align="center">LADI-CLIENT</h1></p>
 <p align="center">
 	<em><code>❯ REPLACE-ME</code></em>
 </p>
