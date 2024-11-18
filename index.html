@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,53 +6,112 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
 </head>
 
 <body>
-    <div class="btn"></div>
+    <div class="container slug__30MF-liber-bishop">
+        <button class="btn btn-sm">30MF-liber-bishop</button>
+    </div>
+    <div class="slug__30MF-rosan-archer">
+        <button class="btn btn-sm">30MF-rosan-archer</button>
+    </div>
+    <div class="ld_modal"></div>
     <!-- v-scope value can be omitted -->
-    <script type="module" src="./js/ladi-server@0.0.5.js"></script>
+    <script type="module" src="/js/ladi-server@0.0.5.js"></script>
     <script type="module">
-        import { Render, PostData, GetAllData } from "./js/ladi-server@0.0.5.js"
+        import { Render, initialData } from "/js/ladi-server@0.0.5.js";
 
-        Render("btn",
-            `<div class="flex gap-x-2">
-                ${[...await GetAllData("products")].map((val, index) =>
-                `<div class="card bg-base-100 w-96 shadow-xl" onclick="document.getElementById('product_modal_${val.id}').showModal()">
-                    <figure class="px-10 pt-10 h-96">
-                        <img
-                        src=${val.thumbnail}
-                        class="rounded-xl object-cover h-full" />
-                    </figure>
-                    <div class="card-body items-center text-center">
-                        <h2 class="card-title">${val.name}</h2>
-                    </div>
-                </div>
-                
-                <dialog id="product_modal_${val.id}" class="modal">
-                    <div class="modal-box">
-                        <figure class="px-10 pt-10">
-                        <img
-                            src=${val.thumbnail}
-                            class="rounded-xl object-cover h-full" />
-                        </figure>
-                        <div class="card-body items-center text-center">
-                            <h2 class="card-title">${val.name}</h2>
-                            <p>${val.note}</p>
-                        </div>
-                        <div class="modal-action">
-                        <form method="dialog">
-                            <!-- if there is a button in form, it will close the modal -->
-                            <button class="btn">Close</button>
-                        </form>
-                        </div>
-                    </div>
-                </dialog>
-                `).join("\n")}
+        const products = await initialData("products");
+
+        const modal = $(".ld_modal");
+
+        $('[class*="slug"]').each(function () {
+            $(this).click(() => {
+                // Get all class names
+                const classes = $(this).attr("class").split(" ");
+                // Find the class that starts with "slug"
+                const slugClass = classes.find((cls) => cls.startsWith("slug"));
+                // Log the slug class
+                if (slugClass) {
+                    const slug = slugClass.split("__")[1];
+                    const val = products.find((val) => val.slug === slug);
+                    modal.html(`
+                   <input type="checkbox" checked={true} id="my_modal_6" class="modal-toggle" />
+<div class="modal" role="dialog">
+  <div class="modal-box w-11/12 max-w-5xl">
+    <div class="flex">
+        <div class="space-y-5">
+            <figure>
+                <img
+                    src=${val.thumbnail}
+                    class="rounded-xl object-cover h-full" />
+            </figure>
+            <div class="flex overflow-auto gap-x-5 px-1">
+                ${val.sub_thumbnail.map(v => ` 
+                <img
+                    src=${v}
+                    class="rounded-xl w-24 object-cover h-full" />`).join("")}    
             </div>
-        `)
+            <div>${val.included_accessories}</div>
+        </div>
+        <div class="card-body py-0"> 
+            <h2 class="card-title">${val.name}</h2>
+            <p>${val.category}</p>
+            ${val.model_introduction}
+            ${val.model_information}
+        </div>       
+    </div>
+ 
+               
+   
+  </div>
+   <label for="my_modal_6" class="modal-backdrop"> </label>
+</div>
+                        `);
+                }
+            });
+        });
 
+        // Render("btn",
+        //     `<div class="flex gap-x-2">
+        //         ${[...await GetAllData("products")].map((val, index) =>
+        //         `<div class="card bg-base-100 w-96 shadow-xl" onclick="document.getElementById('product_modal_${val.id}').showModal()">
+        //             <figure class="px-10 pt-10 h-96">
+        //                 <img
+        //                 src=${val.thumbnail}
+        //                 class="rounded-xl object-cover h-full" />
+        //             </figure>
+        //             <div class="card-body items-center text-center">
+        //                 <h2 class="card-title">${val.name}</h2>
+        //             </div>
+        //         </div>
+
+        // <dialog id="product_modal_${val.id}" class="modal">
+        //     <div class="modal-box">
+        //         <figure class="px-10 pt-10">
+        //         <img
+        //             src=${val.thumbnail}
+        //             class="rounded-xl object-cover h-full" />
+        //         </figure>
+        //         <div class="card-body items-center text-center">
+        //             <h2 class="card-title">${val.name}</h2>
+        //             <p>${val.category}</p>
+        //             <div>
+        //                ${val.
+        //     model_information}
+        //             </div>
+        //         </div>
+        //         <div class="modal-action">
+        //         <form method="dialog">
+        //             <!-- if there is a button in form, it will close the modal -->
+        //             <button class="btn">Close</button>
+        //         </form>
+        //         </div>
+        //     </div>
+        // </dialog>
+        //         `).join("\n")}
+        //     </div>
+        // `)
     </script>
 </body>
 

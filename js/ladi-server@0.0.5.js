@@ -3,15 +3,7 @@ const headTags = [
         tagName: "link",
         attributes:
         {
-            href: "https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css",
-            rel: "stylesheet"
-        }
-
-    }, {
-        tagName: "link",
-        attributes:
-        {
-            href: "https://cdn.jsdelivr.net/npm/daisyui@4.12.13/dist/full.min.css",
+            href: "https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css",
             rel: "stylesheet"
         }
 
@@ -30,13 +22,12 @@ const headTags = [
 
 
 const bottomTags = [
+
     {
         tagName: "script",
         attributes:
         {
-            src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js",
-            integrity: "sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+",
-            crossOrigin: "anonymous"
+            src: "https://cdn.tailwindcss.com"
         }
 
     }
@@ -96,7 +87,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase();
-
 // Render element
 
 function Render(elementClass, contents) {
@@ -105,18 +95,7 @@ function Render(elementClass, contents) {
     element.outerHTML = contents
 }
 
-// HTTP Method
-
-function PostData() {
-    set(ref(db, "products/" + self.crypto.randomUUID()), {
-        name: "GTX 3060 Ti",
-        price: 150000,
-    }).then(() => {
-        alert("Data added successfully")
-    })
-}
-
-function GetAllData(path) {
+function initialData(path) {
     const dbRef = ref(db);
 
     return get(child(dbRef, path + "/",)).then((snapshot) => {
@@ -125,7 +104,6 @@ function GetAllData(path) {
             return Object.keys(response).map((val) => {
                 return {
                     ...response[val],
-                    id: val
                 }
             })
         }
@@ -133,4 +111,8 @@ function GetAllData(path) {
 }
 
 
-export { Render, PostData, GetAllData }
+function getProductBySlug(slug) {
+    return [...products].find(val => val.slug === slug);
+}
+
+export { Render, initialData }
