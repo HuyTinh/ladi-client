@@ -37,13 +37,6 @@
             object-fit: cover;
         }
 
-        .swiper {
-            width: 100%;
-            height: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         .swiper-slide {
             background-size: cover;
             background-position: center;
@@ -78,7 +71,6 @@
         }
     </style>
 
-
     <div class="slug__30MF-liber-bishop">
         <button class="btn btn-sm">30MF-liber-bishop</button>
     </div>
@@ -91,7 +83,6 @@
     <script type="module">
         import { Render, initialData } from "/js/ladi-client@0.0.1.js";
         const products = await initialData("products");
-
 
         const modal = $(".ld_modal");
 
@@ -115,22 +106,30 @@
                                 <!-- Swiper -->
                                 <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                                     <div class="swiper-wrapper">
-                                        ${val.thumbnail.map(v => `
+                                        ${val.thumbnail
+                            .map(
+                                (v) => `
                                             <div class="swiper-slide">
                                                 <img src=${v} />
                                             </div>
-                                        `).join("")}
+                                        `
+                            )
+                            .join("")}
                                     </div>
                                     <div class="swiper-button-next"></div>
                                     <div class="swiper-button-prev"></div>
                                 </div>
                                 <div thumbsSlider="" class="swiper mySwiper">
                                     <div class="swiper-wrapper">
-                                        ${val.thumbnail.map(v => `
+                                        ${val.thumbnail
+                            .map(
+                                (v) => `
                                             <div class="swiper-slide">
                                                 <img src=${v} />
                                             </div>
-                                        `).join("")}
+                                        `
+                            )
+                            .join("")}
                                     </div>
                                 </div>
                             </div>
@@ -157,6 +156,10 @@
                 });
                 const swiper2 = new Swiper(".mySwiper2", {
                     loop: true,
+                    autoplay: {
+                        delay: 1000,
+                        disableOnInteraction: false,
+                    },
                     spaceBetween: 10,
                     navigation: {
                         nextEl: ".swiper-button-next",
@@ -167,7 +170,6 @@
                     },
                 });
             });
-
         });
     </script>
 </body>
