@@ -9,6 +9,15 @@ const headTags = [
 
     },
     {
+        tagName: "link",
+        attributes:
+        {
+            href: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
+            rel: "stylesheet"
+        }
+
+    },
+    {
         tagName: "script",
         attributes:
         {
@@ -20,7 +29,6 @@ const headTags = [
     }
 ]
 
-
 const bottomTags = [
 
     {
@@ -30,7 +38,15 @@ const bottomTags = [
             src: "https://cdn.tailwindcss.com"
         }
 
+    },
+    {
+        tagName: "script",
+        attributes:
+        {
+            src: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+        }
     }
+
 ]
 
 function initTags(arrTag, domElement) {
@@ -48,7 +64,6 @@ function initTags(arrTag, domElement) {
 
 
 const initHeadLinks = () => {
-
     document.documentElement.setAttribute("data-theme", "cupcake");
 
     var head = document.querySelector('head');
